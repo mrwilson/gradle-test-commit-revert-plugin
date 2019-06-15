@@ -1,6 +1,10 @@
 # gradle-test-commit-revert-plugin
 
+![](https://img.shields.io/badge/status-beta-lightgray.svg)
+
 A small gradle plugin to implement the [Test-Commit-Revert](https://medium.com/@kentbeck_7670/test-commit-revert-870bbd756864) workflow.
+
+If `:test` passes successfully, all changes are staged and committed, else all changes are reverted.
 
 ## Usage
 
