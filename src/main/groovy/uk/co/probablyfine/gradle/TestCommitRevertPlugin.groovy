@@ -11,7 +11,7 @@ class TestCommitRevertExtension {
 
 class TestCommitRevertPlugin implements Plugin<Project> {
 
-    static void runCommand(String command) {
+    static void runCommand(command) {
         println command.execute().text
     }
 
