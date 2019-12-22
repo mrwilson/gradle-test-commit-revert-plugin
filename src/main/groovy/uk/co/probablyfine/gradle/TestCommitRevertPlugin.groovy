@@ -5,8 +5,9 @@ import org.gradle.api.Project
 import org.gradle.api.tasks.testing.Test
 
 class TestCommitRevertExtension {
-    String commitCommand = 'git commit --all --message TCR'
+    String commitCommand = 'git commit --all --message %MESSAGE%'
     String revertCommand = 'git reset --hard HEAD'
+    Boolean promptForMessage = false
 }
 
 class TestCommitRevertPlugin implements Plugin<Project> {
@@ -23,8 +24,14 @@ class TestCommitRevertPlugin implements Plugin<Project> {
             // This is an individual test run, so ignore
             if (description.parent) return
 
-            runCommand(result.failedTestCount > 0 ? extension.revertCommand : extension.commitCommand)
+            runCommand(result.failedTestCount > 0 ? extension.revertCommand : commit(extension))
         }
+    }
+
+    static def commit(TestCommitRevertExtension extension) {
+        String message = System.console() && extension.promptForMessage ? System.console().readLine('Enter commit message: '): 'TCR'
+
+        return extension.commitCommand.replace("%MESSAGE%", message)
     }
 
     @Override
